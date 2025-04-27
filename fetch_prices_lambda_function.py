@@ -1,5 +1,5 @@
 import json
-import requests
+import urllib3
 import boto3
 import os
 
@@ -19,13 +19,22 @@ def lambda_handler(event, context):
         'order': 'market_cap_desc',
         'per_page': 50,
         'page': 1,
-        'sparkline': False
+        'sparkline': 'false'  # Must be string when using urllib3 fields
     }
 
+    http = urllib3.PoolManager()
+
     try:
-        response = requests.get(url, params=params)
-        response.raise_for_status()
-        coins = response.json()
+        # Send GET request with query parameters
+        encoded_params = urllib3.request.urlencode(params)
+        full_url = f"{url}?{encoded_params}"
+
+        response = http.request('GET', full_url)
+        
+        if response.status != 200:
+            raise Exception(f"Request failed with status {response.status}")
+
+        coins = json.loads(response.data.decode('utf-8'))
 
         count = 0
         for coin in coins:
