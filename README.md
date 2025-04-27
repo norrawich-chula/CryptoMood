@@ -58,7 +58,7 @@ Create a **Lambda execution role** named `cryptomood_lambda_role` with the follo
 - Lambda can read Kinesis and write/read DynamoDB
 - Lambda can publish to SNS
 
-Policy Example (from `cryptomood_lambda_role.txt`):
+Policy Example (from `cryptomood_lambda_policy.json`):
 
 ```json
 {
