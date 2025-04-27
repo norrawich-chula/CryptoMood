@@ -1,0 +1,49 @@
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "KinesisPutRecordStream1",
+			"Effect": "Allow",
+			"Action": "kinesis:PutRecord",
+			"Resource": "arn:aws:kinesis:ap-southeast-1:961341553833:stream/CryptoStream"
+		},
+		{
+			"Sid": "KinesisReadAccessStream1",
+			"Effect": "Allow",
+			"Action": [
+				"kinesis:GetRecords",
+				"kinesis:GetShardIterator",
+				"kinesis:DescribeStream",
+				"kinesis:ListStreams"
+			],
+			"Resource": "arn:aws:kinesis:ap-southeast-1:961341553833:stream/CryptoStream"
+		},
+		{
+			"Sid": "DynamoDBAccessMainTable",
+			"Effect": "Allow",
+			"Action": [
+				"dynamodb:GetItem",
+				"dynamodb:PutItem",
+				"dynamodb:UpdateItem",
+				"dynamodb:DescribeTable"
+			],
+			"Resource": "arn:aws:dynamodb:ap-southeast-1:961341553833:table/CryptoTrends_table"
+		},
+		{
+			"Sid": "SNSPublishAlertMain",
+			"Effect": "Allow",
+			"Action": "sns:Publish",
+			"Resource": "arn:aws:sns:ap-southeast-1:961341553833:CryptoTrendAlerts"
+		},
+		{
+			"Sid": "CloudWatchLogging",
+			"Effect": "Allow",
+			"Action": [
+				"logs:CreateLogGroup",
+				"logs:CreateLogStream",
+				"logs:PutLogEvents"
+			],
+			"Resource": "*"
+		}
+	]
+}
